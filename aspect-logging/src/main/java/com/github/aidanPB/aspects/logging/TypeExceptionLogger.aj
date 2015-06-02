@@ -14,6 +14,8 @@ public privileged aspect TypeExceptionLogger extends AbstractTypeLoggerAspect {
 	pointcut anyGetterExecution() : simpleGetterExecution() || indexedGetterExecution(int)
 			|| mappedGetterExecution(String);
 	
+	pointcut anyNoArgMethodExec() : execution(!@RethrowExceptions * *.*());
+	
 	pointcut simpleSetterExecution(Object value) :
 		execution(!@RethrowExceptions void *.set*(*)) && args(value);
 	pointcut fluentSimpleSetter(Object value) :
@@ -36,7 +38,7 @@ public privileged aspect TypeExceptionLogger extends AbstractTypeLoggerAspect {
 	pointcut nonBeanExecution() : (execution(* *.*(..)) || execution(*.new(..))) &&
 			!(anyGetterExecution() || anySetterExecution() || noArgConstructorExecution());
 	
-	Object around() : simpleGetterExecution() {
+	Object around() : anyNoArgMethodExec() {
 		try{
 			return proceed();
 		}catch(Exception e){

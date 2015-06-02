@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.github.aidanPB</groupId>
+    <artifactId>common-parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <artifactId>aspect-tracing</artifactId>
+  <version>0.0.2-SNAPSHOT</version>
+  <name>AspectJ Tracing</name>
+  <description>Aspects to be used with ${project.groupId}:aspect-logging to provide fine-grained tracing in addition to the default exception logging.</description>
+  <inceptionYear>2015</inceptionYear>
+  <dependencies>
+    <dependency>
+    	<groupId>com.github.aidanPB</groupId>
+    	<artifactId>aspect-logging</artifactId>
+    	<version>0.0.2-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+    	<artifactId>aspectj-maven-plugin</artifactId>
+    	<configuration>
+    	  <aspectLibraries>
+    	    <aspectLibrary>
+    	      <groupId>com.github.aidanPB</groupId>
+    	      <artifactId>aspect-logging</artifactId>
+    	    </aspectLibrary>
+    	  </aspectLibraries>
+    	</configuration>
+    	<executions>
+    	  <execution>
+    	    <id>aspectj-compile</id>
+    	    <phase>compile</phase>
+    	    <goals>
+    	      <goal>compile</goal>
+    	    </goals>
+    	  </execution>
+    	  <execution>
+    	    <id>aspectj-test-compile</id>
+    	    <phase>test-compile</phase>
+    	    <goals>
+    	      <goal>test-compile</goal>
+    	    </goals>
+    	  </execution>
+    	</executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

@@ -4,26 +4,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 public abstract privileged aspect AbstractMemberLoggerAspect pertypewithin(*) {
-
-	public pointcut loggedNoArgConstructorCall() : call(@LoggedMember !@RethrowExceptions *.new());
-	public pointcut loggedSingleArgConstructorCall(Object arg) :
-		call(@LoggedMember !@RethrowExceptions *.new(..)) && args(arg) && if(!arg.getClass().isArray());
-	public pointcut loggedVarargArrayConstructorCall(Object[] args) :
-		(call(@LoggedMember !@RethrowExceptions *.new(*...))
-				|| call(@LoggedMember !@RethrowExceptions *.new(*[]))) && args(args);
-	public pointcut loggedNoArgMethodCall() : call(@LoggedMember !@RethrowExceptions * *.*());
-	public pointcut loggedSingleArgMethodCall(Object arg) :
-		call(@LoggedMember !@RethrowExceptions * *.*(..)) && args(arg) && if(!arg.getClass().isArray());
-	public pointcut loggedVarargArrayMethodCall(Object[] args) :
-		(call(@LoggedMember !@RethrowExceptions * *.*(*...))
-				|| call(@LoggedMember !@RethrowExceptions * *.*(*[]))) && args(args);
-	public pointcut rethrowingConstructorCall() : call(@LoggedMember @RethrowExceptions *.new(..));
-	public pointcut rethrowingMethodCall() : call(@LoggedMember @RethrowExceptions * *.*(..));
-	protected pointcut anySimpleCall() :
-		loggedNoArgConstructorCall() || loggedSingleArgConstructorCall(Object)
-		|| loggedVarargArrayConstructorCall(Object[]) || loggedNoArgMethodCall()
-		|| loggedSingleArgMethodCall(Object) || loggedVarargArrayMethodCall(Object[])
-		|| rethrowingConstructorCall() || rethrowingMethodCall();
 	
 	public pointcut loggedNoArgConstructorExec() : execution(@LoggedMember !@RethrowExceptions *.new());
 	public pointcut loggedSingleArgConstructorExec(Object arg) :

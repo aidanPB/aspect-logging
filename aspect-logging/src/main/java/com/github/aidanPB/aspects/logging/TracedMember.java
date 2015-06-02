@@ -17,4 +17,5 @@ import java.lang.annotation.*;
 @Target(value={ElementType.CONSTRUCTOR, ElementType.METHOD})
 public @interface TracedMember {
 
+	LogLevel logLevel() default LogLevel.DEBUG;
 }
